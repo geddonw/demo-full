@@ -1,12 +1,13 @@
 # Stage 1: Dependencies
-FROM node:18-alpine AS deps
+FROM node:18-bullseye-slim AS deps
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
+COPY prisma ./prisma
 RUN npm ci
 
 # Stage 2: Build
-FROM node:18-alpine AS builder
+FROM node:18-bullseye-slim AS builder
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
@@ -19,7 +20,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # Stage 3: Production
-FROM node:18-alpine AS runner
+FROM node:18-bullseye-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production

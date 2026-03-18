@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
@@ -32,7 +34,7 @@ export default async function Home() {
       {process.env.DATABASE_URL && items.length === 0 && (
         <div className="info-box">
           <p>No items yet. Add some via the API!</p>
-          <code>curl -X POST http://localhost:3000/api/items -H "Content-Type: application/json" -d '{"name":"Test Item"}'</code>
+          <code>{`curl -X POST http://localhost:3000/api/items -H "Content-Type: application/json" -d '{"name":"Test Item"}'`}</code>
         </div>
       )}
 
